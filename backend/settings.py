@@ -2,7 +2,6 @@ import logging
 import pkg_resources
 from functools import lru_cache
 from pathlib import Path
-from typing import Dict, List, Optional, Union
 
 from pydantic import AnyHttpUrl, BaseSettings, validator
 
@@ -12,10 +11,10 @@ logger = logging.getLogger(__name__)
 
 class Settings(BaseSettings):
     """App settings"""
-    BACKEND_CORS_ORIGINS: List[AnyHttpUrl]
+    BACKEND_CORS_ORIGINS: list[AnyHttpUrl]
 
     @validator("BACKEND_CORS_ORIGINS", pre=True)
-    def assemble_cors_origins(cls, v: Union[str, List[str]]) -> Union[List[str], str]:
+    def assemble_cors_origins(cls, v: str | list[str]) -> list[str] | str:
         if isinstance(v, str) and not v.startswith("["):
             return [i.strip() for i in v.split(",")]
         elif isinstance(v, (list, str)):
@@ -27,7 +26,7 @@ class Settings(BaseSettings):
     APP_CONTAINERIZED: str
 
     APP_LOG_LEVEL: str
-    APP_LOG_PATH: Optional[str]
+    APP_LOG_PATH: str | None
 
     METADATA_POSTGRES_HOST: str
     METADATA_POSTGRES_PORT: str
@@ -42,9 +41,9 @@ class Settings(BaseSettings):
     JWT_SIGNING_ALGORITHM: str = "HS256"
 
     CACHE_TIMEOUT: int = 60
-    CACHE_PATH: Union[str, Path] = Path(__file__).parent.parent.resolve() / 'cache'
+    CACHE_PATH: str | Path = Path(__file__).parent.parent.resolve() / 'cache'
 
-    def get_insensitive_configuration(self) -> Dict:
+    def get_insensitive_configuration(self) -> dict:
         allow_variable_prefixes = (
             'CACHE_TIMEOUT',
             'PGTZ',

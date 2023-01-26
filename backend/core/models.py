@@ -1,5 +1,3 @@
-from typing import Union, List, Dict
-
 from fastapi import status as fastapi_status
 from pydantic import BaseModel
 
@@ -11,7 +9,7 @@ class APIResponse(BaseModel):
     status: str = APIResponseStatus.SUCCESS
     status_code: int = fastapi_status.HTTP_200_OK
     message: str = None
-    payload: Union[BaseModel, List, Dict] = None
+    payload: BaseModel | list | dict = None
 
 
 class ErrorAPIResponse(APIResponse):

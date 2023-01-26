@@ -1,5 +1,3 @@
-from typing import Dict
-
 from pydantic import BaseModel
 
 from backend.api.v1.common_endpoints import constants
@@ -31,4 +29,4 @@ class AppVersionAPIResponse(APIResponse):
 class AppConfigAPIResponse(APIResponse):
     """App config API response"""
     message: str = constants.APIResponseMessageTemplate.CONFIGURATION_INFO
-    payload: Dict
+    payload: dict

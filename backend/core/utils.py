@@ -1,5 +1,4 @@
 import logging
-from typing import Dict, List, Union
 
 from fastapi import HTTPException
 from fastapi.responses import JSONResponse
@@ -26,10 +25,10 @@ def make_response(api_response: BaseModel, status_code: int = None) -> JSONRespo
     )
 
 
-def generate_example_response(response_examples: Union[List[Dict], Dict], description: str = 'Success') -> Dict:
+def generate_example_response(response_examples: list[dict] | dict, description: str = 'Success') -> dict:
     """Substitution of endpoint response examples in response template description"""
     if isinstance(response_examples, dict):
-        response_examples: List[Dict] = [response_examples]
+        response_examples: list[dict] = [response_examples]
 
     return {
         "description": description,
